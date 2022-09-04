@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState} from 'react';
 import {
   Container,
   Navigation,
@@ -9,12 +9,12 @@ import {
 } from './SidebarStyles';
 import { sidebarItems } from '../../constants';
 
-const Sidebar = ({ toggled }) => {
+const Sidebar = ({closed}) => {
   const [selected, setSelected] = useState('');
 
   return (
     <Container>
-      <Navigation toggled={toggled}>
+      <Navigation closed={closed}>
         <BarList>
           {sidebarItems.map((sbi) => (
             <BarListItem

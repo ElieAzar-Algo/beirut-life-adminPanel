@@ -4,12 +4,9 @@ import {
   IoCashOutline,
   IoEyeOutline,
   IoHomeOutline,
-  IoLogoApple,
-  IoLogOutOutline,
   IoSettingsOutline,
-  IoBarChartOutline,
-  IoNotificationsOutline,
   IoAnalyticsOutline,
+  IoConstructOutline,
 } from 'react-icons/io5';
 
 const iconSize = 30;
@@ -41,12 +38,6 @@ export const cards = [
 ];
 
 export const sidebarItems = [
-  // {
-  //   id: 1,
-  //   icon: <IoLogoApple size={iconSize} className="icon-style" />,
-  //   path: '/',
-  //   title: 'Brand Name',
-  // },
   {
     id: 2,
     icon: <IoHomeOutline size={iconSize} className="icon-style" />,
@@ -55,15 +46,15 @@ export const sidebarItems = [
   },
   {
     id: 3,
-    icon: <IoBarChartOutline size={iconSize} className="icon-style" />,
-    path: '/revenues',
-    title: 'Revenues',
+    icon: <IoConstructOutline size={iconSize} className="icon-style" />,
+    path: '/product',
+    title: 'Products',
   },
   {
     id: 4,
-    icon: <IoNotificationsOutline size={iconSize} className="icon-style" />,
-    path: '/notifications',
-    title: 'Notifications',
+    icon: <IoConstructOutline size={iconSize} className="icon-style" />,
+    path: '/customer',
+    title: 'Customers',
   },
   {
     id: 5,
@@ -77,10 +68,4 @@ export const sidebarItems = [
     path: '/settings',
     title: 'Settings',
   },
-  // {
-  //   id: 7,
-  //   icon: <IoLogOutOutline size={iconSize} className="icon-style" />,
-  //   path: '/signout',
-  //   title: 'Sign Out',
-  // },
 ];

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import {
   Sidebar,
   Image,
@@ -32,12 +32,12 @@ const LDSidebar = () => {
       <Header theme={theme} closed={closed}>
         <ImageText>
           <Image closed={closed}>
-            <img src="logo.jpg" alt="logo" />
+            <img src="logo.png" alt="logo" />
           </Image>
 
           <LogoText closed={closed}>
-            <span className="name">Ismat Ayash</span>
-            <span className="profession">Digital Transformation</span>
+            <span className="name">Beirut Life Admin</span>
+            <span className="profession">Insurance Company</span>
           </LogoText>
         </ImageText>
 

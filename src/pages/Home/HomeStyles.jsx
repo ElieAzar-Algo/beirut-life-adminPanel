@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: absolute;
   top: 60px;
-  width: calc(99% - ${({ toggled }) => (toggled ? '75px' : '310px')});
-  left: ${({ toggled }) => (toggled ? '75px' : '320px')};
+  width: calc(99% - ${({ closed }) => (closed ? '75px' : '310px')});
+  left: ${({ closed }) => (closed ? '75px' : '320px')};
   display: flex;
   flex-direction: column;
   gap: 70px;

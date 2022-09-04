@@ -1,12 +1,14 @@
-import React from 'react';
+import { useContext } from 'react';
 import { Container, Cards } from './HomeStyles';
-import Card from '../../components/Card';
-import Orders from '../../components/Orders';
+import { Orders, Card } from '../../components';
 import { cards } from '../../constants';
+import { ThemeCtx } from '../../context/ThemeStore';
 
-const Home = ({ toggled }) => {
+const Home = () => {
+  const { closed } = useContext(ThemeCtx);
+
   return (
-    <Container toggled={toggled}>
+    <Container closed={closed}>
       <Cards>
         {cards.map((card) => (
           <Card

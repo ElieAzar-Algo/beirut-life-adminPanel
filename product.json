@@ -1,0 +1,22 @@
+{
+  "policyCode": "ACC-02",
+  "title": "Personal Accident",
+  "description": "Get the affordable personal accident insurance coverage you deserve. With Beirut Life, worry-free since you are covered while on the journey. We offer you coverage for car accidental death, permanent disability, passive war risk and hospital cash benefits.",
+  "sumInsured": 7500,
+  "sumInsuredRemark": "USD 50 paid in cash as hospital benefits for a max of 15 days",
+  "currency": "usd",
+  "premium": 45,
+  "fixedPremium": true,
+  "category": "Accident",
+  "unit": "",
+  "remark": null,
+  "covers": [
+    "Accidental Death",
+    "Total Permanent Disability due to Accident - TPD",
+    "Passive War Risk - PWR ",
+    "Hospital Cash Benefit for a max of 15 days"
+  ],
+  "image": "https://firebasestorage.googleapis.com/v0/b/beirut-life-storage.appspot.com/o/ThirdPartyLiab.jpeg?alt=media&token=90687daa-f553-4f1b-9423-2a146ea0b9e5",
+  "intro": "Here goes the introduction of the policy summarizing benefits and terms. replace this text with the appropriate text and sufficient explanation for the insured to understand. decide whether you would like to attach the terms and conditions with every policy you print:",
+  "creator": "Beirut Life"
+}

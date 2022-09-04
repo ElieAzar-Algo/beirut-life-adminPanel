@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const Navigation = styled.div`
   position: fixed;
-  width: ${({ toggled }) => (toggled ? '55px' : '300px')};
+  width: ${({ closed }) => (closed ? '55px' : '300px')};
   height: 100%;
   background: var(--blue);
   border-left: 10px solid var(--blue);
