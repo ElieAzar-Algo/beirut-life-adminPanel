@@ -20,8 +20,8 @@ export const createAPIEndpoint = (endpoint) => {
     },
     fetch: () => axios.get(url),
     fetchById: (id) => axios.get(url + '/' + id),
-    post: (newRecord) => axios.post(url, newRecord),
+    post: (newRecord) => axios.post(url, newRecord, options),
     put: (id, updatedRecord) => axios.put(url + '/' + id, updatedRecord),
-    delete: (id) => axios.delete(url + id),
+    delete: (id) => axios.delete(url + '/' + id),
   };
 };

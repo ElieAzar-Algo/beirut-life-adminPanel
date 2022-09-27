@@ -21,7 +21,7 @@ const ProductProvider = ({ children }) => {
   // console.log('--------> products <---------:', products);
 
   return (
-    <ProductCtx.Provider value={{ products }}>{children}</ProductCtx.Provider>
+    <ProductCtx.Provider value={{ products, setProducts }}>{children}</ProductCtx.Provider>
   );
 };
 

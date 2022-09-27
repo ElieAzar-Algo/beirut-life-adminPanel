@@ -23,10 +23,14 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  LinearProgress,
   MenuItem,
+  Stack,
 } from '@mui/material';
 import { TextField, Select, Switch } from 'formik-mui';
 import ArrayField from '../../components/ArrayField';
+import storage from '../../firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const productData = [
   {
@@ -42,24 +46,6 @@ const productData = [
     Sales: 5000,
   },
 ];
-
-// const initialValues = {
-//   policyCode: '',
-//   title: '',
-//   description: '',
-//   sumInsured: 0,
-//   sumInsuredRemark: false,
-//   currency: '',
-//   premium: 0,
-//   fixedPremium: false,
-//   category: '',
-//   unit: '',
-//   remark: '',
-//   covers: [],
-//   creator: '',
-//   image: '',
-//   intro: '',
-// };
 
 const formFields = [
   { key: 1, xs: 4, name: 'policyCode', label: 'Policy Code' },
@@ -101,6 +87,10 @@ const Product = () => {
   const [openSnack, setOpenSnack] = useState(false);
   const [err, setErr] = useState(false);
   const { closed } = useContext(ThemeCtx);
+  const [file, setFile] = useState('');
+  const [fileurl, setFileurl] = useState('');
+  const [percent, setPercent] = useState(0);
+  const [buffer, setBuffer] = useState(10);
 
   useEffect(() => {
     async function fetchProdById() {
@@ -157,10 +147,8 @@ const Product = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const { data } = await createAPIEndpoint(ENDPOINTS.PRODUCT).put(
-        values.id,
-        values
-      );
+      if (fileurl !== '') values.image = fileurl;
+      await createAPIEndpoint(ENDPOINTS.PRODUCT).put(values.id, values);
       setOpenSnack(true);
     } catch (error) {
       console.log('ERROR ', error);
@@ -174,6 +162,38 @@ const Product = () => {
     }
 
     setOpenSnack(false);
+  };
+
+  const handleChange = (event) => {
+    console.log(event.target.files[0]);
+    setFile(event.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (!file) {
+      alert('Please upload an image first!');
+    }
+
+    const storageRef = ref(storage, `/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setPercent(percent);
+        setBuffer(10);
+      },
+      (err) => console.log(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          setFileurl(url);
+        });
+      }
+    );
   };
 
   return (
@@ -195,7 +215,20 @@ const Product = () => {
         </Alert>
       </Snackbar>
       {!prod ? (
-        <CircularProgress />
+        <Stack
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+          spacing={2}
+          direction="row"
+        >
+          <CircularProgress color="secondary" />
+          <CircularProgress color="success" />
+          <CircularProgress color="inherit" />
+        </Stack>
       ) : (
         <>
           <ProductTitle>
@@ -248,14 +281,29 @@ const Product = () => {
                       />
                     </div>
                     <Button
+                      onClick={handleUpload}
                       sx={{ marginTop: 3 }}
                       variant="contained"
                       component="label"
                       startIcon={<MdPhotoCamera />}
                     >
                       Change Product Image
-                      <input hidden accept="image/*" multiple type="file" />
+                      <input
+                        hidden
+                        accept="image/*"
+                        multiple
+                        type="file"
+                        onChange={handleChange}
+                      />
                     </Button>
+                    <Box sx={{ marginTop: 2, width: '100%', maxWidth: 240 }}>
+                      <LinearProgress
+                        variant="buffer"
+                        value={percent}
+                        valueBuffer={buffer}
+                      />
+                    </Box>
+                    <p>{percent} "% done"</p>
                     <Button
                       sx={{ marginTop: 24 }}
                       fullWidth

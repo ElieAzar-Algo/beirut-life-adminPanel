@@ -17,16 +17,19 @@ import {
 } from './ProductsStyles';
 import { ProductCtx } from '../../context/ProductCtx';
 import { ThemeCtx } from '../../context/ThemeStore';
+import { createAPIEndpoint, ENDPOINTS } from '../../api';
 
 const Products = () => {
-  const { products } = useContext(ProductCtx);
+  const { products, setProducts } = useContext(ProductCtx);
   const [productData, setProductData] = useState(products);
   const { closed } = useContext(ThemeCtx);
 
   useEffect(() => setProductData(products), [products]);
 
-  const handleDelete = (id) => {
-    setProductData(productData.filter((d) => d.id !== id));
+  const handleDelete = async (id) => {
+    await createAPIEndpoint(ENDPOINTS.PRODUCT).delete(id);
+    setProductData(products.filter((d) => d.id !== id));
+    setProducts(products);
   };
 
   const renderActions = ({ id }) => {
