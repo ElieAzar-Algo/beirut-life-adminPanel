@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import Chart from '../../components/Chart';
 import {
-  ProductAddButton,
   ProductBottom,
   ProductCtr,
   ProductFormLeft,
@@ -27,10 +26,10 @@ import {
   MenuItem,
   Stack,
 } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
 import { TextField, Select, Switch } from 'formik-mui';
 import ArrayField from '../../components/ArrayField';
-import storage from '../../firebase';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import uploadFileProgress from '../../firebase/uploadFileProgress';
 
 const productData = [
   {
@@ -62,9 +61,9 @@ const formFields = [
   { key: 5, xs: 3, name: 'sumInsured', label: 'Sum Insured', type: 'number' },
   { key: 6, xs: 3, name: 'currency', label: 'Currency' },
   { key: 7, xs: 3, name: 'premium', label: 'Premium', type: 'number' },
-  { key: 9, xs: 3, name: 'unit', label: 'Unit' },
+  { key: 8, xs: 3, name: 'unit', label: 'Unit' },
   {
-    key: 8,
+    key: 9,
     xs: 6,
     name: 'fixedPremium',
     label: 'Fixed Premium ?',
@@ -73,12 +72,20 @@ const formFields = [
   {
     key: 10,
     xs: 6,
+    name: 'active',
+    label: 'Active ?',
+    type: 'Switch',
+  },
+  {
+    key: 11,
+    xs: 6,
     name: 'sumInsuredRemark',
     label: 'Sum Insured Remarks ?',
     type: 'Switch',
   },
-  { key: 11, xs: 12, name: 'remark', label: 'Remarks' },
-  { key: 12, xs: 12, name: 'intro', label: 'Policy Introduction' },
+  { key: 12, xs: 12, name: 'creator', label: 'Created By' },
+  { key: 13, xs: 12, name: 'remark', label: 'Remarks' },
+  { key: 14, xs: 12, name: 'intro', label: 'Policy Introduction' },
 ];
 
 const Product = () => {
@@ -165,36 +172,25 @@ const Product = () => {
   };
 
   const handleChange = (event) => {
-    console.log(event.target.files[0]);
     setFile(event.target.files[0]);
   };
 
-  const handleUpload = () => {
-    if (!file) {
-      alert('Please upload an image first!');
+  useEffect(() => {
+    async function uploadImage() {
+      const imageName = uuidv4() + '.' + file.name.split('.').pop();
+      const url = await uploadFileProgress(
+        file,
+        '/files',
+        imageName,
+        setPercent,
+        setBuffer
+      );
+      setFileurl(url);
     }
-
-    const storageRef = ref(storage, `/files/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setPercent(percent);
-        setBuffer(10);
-      },
-      (err) => console.log(err),
-      () => {
-        // download url
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          setFileurl(url);
-        });
-      }
-    );
-  };
+    if (file) {
+      uploadImage();
+    }
+  }, [file]);
 
   return (
     <ProductCtr closed={closed}>
@@ -233,9 +229,6 @@ const Product = () => {
         <>
           <ProductTitle>
             <h1>{prod.title}</h1>
-            <Link to="/product/newproduct">
-              <ProductAddButton>Create</ProductAddButton>
-            </Link>
           </ProductTitle>
           <ProductTop>
             <Chart
@@ -281,7 +274,6 @@ const Product = () => {
                       />
                     </div>
                     <Button
-                      onClick={handleUpload}
                       sx={{ marginTop: 3 }}
                       variant="contained"
                       component="label"

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import {
   ProductBottom,
@@ -23,8 +23,8 @@ import {
 } from '@mui/material';
 import { TextField, Select, Switch } from 'formik-mui';
 import ArrayField from '../../components/ArrayField';
-import storage from '../../firebase';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+import uploadFileProgress from '../../firebase/uploadFileProgress';
 
 const formFields = [
   { key: 1, xs: 4, name: 'policyCode', label: 'Policy Code' },
@@ -37,27 +37,35 @@ const formFields = [
     type: 'Select',
     menuItems: ['Accident', 'Travel', 'Medical'],
   },
-  { key: 4, xs: 12, name: 'description', label: 'Description' },
-  { key: 5, xs: 3, name: 'sumInsured', label: 'Sum Insured', type: 'number' },
-  { key: 6, xs: 3, name: 'currency', label: 'Currency' },
-  { key: 7, xs: 3, name: 'premium', label: 'Premium', type: 'number' },
+  { key: 5, xs: 12, name: 'description', label: 'Description' },
+  { key: 6, xs: 3, name: 'sumInsured', label: 'Sum Insured', type: 'number' },
+  { key: 7, xs: 3, name: 'currency', label: 'Currency' },
+  { key: 8, xs: 3, name: 'premium', label: 'Premium', type: 'number' },
   { key: 9, xs: 3, name: 'unit', label: 'Unit' },
   {
-    key: 8,
-    xs: 6,
+    key: 11,
+    xs: 4,
+    name: 'active',
+    label: 'Active ?',
+    type: 'Switch',
+  },
+  {
+    key: 10,
+    xs: 4,
     name: 'fixedPremium',
     label: 'Fixed Premium ?',
     type: 'Switch',
   },
   {
-    key: 10,
-    xs: 6,
+    key: 12,
+    xs: 4,
     name: 'sumInsuredRemark',
     label: 'Sum Insured Remarks ?',
     type: 'Switch',
   },
-  { key: 11, xs: 12, name: 'remark', label: 'Remarks' },
-  { key: 12, xs: 12, name: 'intro', label: 'Policy Introduction' },
+  { key: 13, xs: 12, name: 'creator', label: 'Created By' },
+  { key: 14, xs: 12, name: 'remark', label: 'Remarks' },
+  { key: 15, xs: 12, name: 'intro', label: 'Policy Introduction' },
 ];
 
 const initialValues = {
@@ -69,6 +77,7 @@ const initialValues = {
   currency: '',
   premium: 0,
   fixedPremium: false,
+  active: true,
   category: '',
   unit: '',
   remark: '',
@@ -154,32 +163,22 @@ const NewProduct = () => {
     setFile(event.target.files[0]);
   };
 
-  const handleUpload = () => {
-    if (!file) {
-      alert('Please upload an image first!');
+  useEffect(() => {
+    async function uploadImage() {
+      const imageName = uuidv4() + '.' + file.name.split('.').pop();
+      const url = await uploadFileProgress(
+        file,
+        '/files',
+        imageName,
+        setPercent,
+        setBuffer
+      );
+      setFileurl(url);
     }
-
-    const storageRef = ref(storage, `/files/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setPercent(percent);
-        setBuffer(10);
-      },
-      (err) => console.log(err),
-      () => {
-        // download url
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          setFileurl(url);
-        });
-      }
-    );
-  };
+    if (file) {
+      uploadImage();
+    }
+  }, [file]);
 
   return (
     <ProductCtr closed={closed}>
@@ -236,7 +235,6 @@ const NewProduct = () => {
                   />
                 </div>
                 <Button
-                  onClick={handleUpload}
                   sx={{ marginTop: 3 }}
                   variant="contained"
                   component="label"

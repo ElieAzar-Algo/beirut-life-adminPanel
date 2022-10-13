@@ -53,8 +53,8 @@ export const sidebarItems = [
   {
     id: 4,
     icon: <IoConstructOutline size={iconSize} className="icon-style" />,
-    path: '/customer',
-    title: 'Customers',
+    path: '/coveragematrix',
+    title: 'Coverage Matrix',
   },
   {
     id: 5,
