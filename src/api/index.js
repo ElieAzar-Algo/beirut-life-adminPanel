@@ -4,6 +4,7 @@ export const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const ENDPOINTS = {
   PRODUCT: 'product',
+  COVERAGE: 'coverage',
   AUTH: 'auth',
   CHANGEPWD: 'changepwd',
 };

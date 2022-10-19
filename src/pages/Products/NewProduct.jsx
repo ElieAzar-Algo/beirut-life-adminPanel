@@ -8,7 +8,7 @@ import {
 } from './ProductStyles';
 import { MdEdit, MdPhotoCamera } from 'react-icons/md';
 import { ThemeCtx } from '../../context/ThemeStore';
-import { ProductCtx } from '../../context/ProductCtx';
+import { StateContext } from '../../context/StateContext';
 import { createAPIEndpoint, ENDPOINTS } from '../../api';
 import { Formik, Form, Field } from 'formik';
 import {
@@ -27,7 +27,7 @@ import { v4 as uuidv4 } from 'uuid';
 import uploadFileProgress from '../../firebase/uploadFileProgress';
 
 const formFields = [
-  { key: 1, xs: 4, name: 'policyCode', label: 'Policy Code' },
+  { key: 1, xs: 4, name: 'productCode', label: 'Product Code' },
   { key: 2, xs: 4, name: 'title', label: 'Title' },
   {
     key: 3,
@@ -44,36 +44,36 @@ const formFields = [
   { key: 9, xs: 3, name: 'unit', label: 'Unit' },
   {
     key: 11,
-    xs: 4,
+    xs: 6,
     name: 'active',
     label: 'Active ?',
     type: 'Switch',
   },
   {
     key: 10,
-    xs: 4,
+    xs: 6,
     name: 'fixedPremium',
     label: 'Fixed Premium ?',
     type: 'Switch',
   },
-  {
-    key: 12,
-    xs: 4,
-    name: 'sumInsuredRemark',
-    label: 'Sum Insured Remarks ?',
-    type: 'Switch',
-  },
   { key: 13, xs: 12, name: 'creator', label: 'Created By' },
   { key: 14, xs: 12, name: 'remark', label: 'Remarks' },
+  {
+    key: 12,
+    xs: 12,
+    name: 'sumInsuredRemark',
+    label: 'Sum Insured Remarks ?',
+  },
+
   { key: 15, xs: 12, name: 'intro', label: 'Policy Introduction' },
 ];
 
 const initialValues = {
-  policyCode: '',
+  productCode: '',
   title: '',
   description: '',
   sumInsured: 0,
-  sumInsuredRemark: false,
+  sumInsuredRemark: '',
   currency: '',
   premium: 0,
   fixedPremium: false,
@@ -88,7 +88,7 @@ const initialValues = {
 };
 
 const NewProduct = () => {
-  const { products, setProducts } = useContext(ProductCtx);
+  const { products, setProducts } = useContext(StateContext);
   const [openSnack, setOpenSnack] = useState(false);
   const [err, setErr] = useState(false);
   const { closed } = useContext(ThemeCtx);
@@ -141,7 +141,9 @@ const NewProduct = () => {
 
   const handleSubmit = async (values) => {
     try {
-      if (fileurl !== '') values.image = fileurl;
+      if (fileurl !== '') {
+        values.image = fileurl;
+      }
       const { data } = await createAPIEndpoint(ENDPOINTS.PRODUCT).post(values);
       setProducts([...products, { ...data }]);
       setOpenSnack(true);

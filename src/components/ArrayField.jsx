@@ -4,7 +4,7 @@ import { TextField } from 'formik-mui';
 import React from 'react';
 import { MdAdd, MdDelete } from 'react-icons/md';
 
-const ArrayField = ({covers, isSubmitting}) => {
+const ArrayField = ({ covers, isSubmitting }) => {
   return (
     <FieldArray name="covers">
       {({ push, remove }) => (

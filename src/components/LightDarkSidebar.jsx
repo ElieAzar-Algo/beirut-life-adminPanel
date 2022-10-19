@@ -6,7 +6,7 @@ import Product from '../pages/Products/Product';
 import NewProduct from '../pages/Products/NewProduct';
 import { LDSidebar } from '../components';
 import NoMatch from './NoMatch';
-import CoverageMatrix from '../pages/CoverageMatrix';
+import Coverage from '../pages/Coverage';
 
 const LightDarkSidebar = () => {
   return (
@@ -18,7 +18,7 @@ const LightDarkSidebar = () => {
         <Route path="/product" element={<Products />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/product/newproduct" element={<NewProduct />} />
-        <Route path="/coveragematrix" element={<CoverageMatrix />} />
+        <Route path="/coverage" element={<Coverage />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </>

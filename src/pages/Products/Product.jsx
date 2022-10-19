@@ -47,7 +47,7 @@ const productData = [
 ];
 
 const formFields = [
-  { key: 1, xs: 4, name: 'policyCode', label: 'Policy Code' },
+  { key: 1, xs: 4, name: 'productCode', label: 'Product Code' },
   { key: 2, xs: 4, name: 'title', label: 'Title' },
   {
     key: 3,
@@ -78,10 +78,9 @@ const formFields = [
   },
   {
     key: 11,
-    xs: 6,
+    xs: 12,
     name: 'sumInsuredRemark',
     label: 'Sum Insured Remarks ?',
-    type: 'Switch',
   },
   { key: 12, xs: 12, name: 'creator', label: 'Created By' },
   { key: 13, xs: 12, name: 'remark', label: 'Remarks' },

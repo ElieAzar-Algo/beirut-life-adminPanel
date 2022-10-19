@@ -15,12 +15,12 @@ import {
   ProductAddBtnText,
   ProductImage,
 } from './ProductsStyles';
-import { ProductCtx } from '../../context/ProductCtx';
+import { StateContext } from '../../context/StateContext';
 import { ThemeCtx } from '../../context/ThemeStore';
 import { createAPIEndpoint, ENDPOINTS } from '../../api';
 
 const Products = () => {
-  const { products, setProducts } = useContext(ProductCtx);
+  const { products, setProducts } = useContext(StateContext);
   const [productData, setProductData] = useState(products);
   const { closed } = useContext(ThemeCtx);
 

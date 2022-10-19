@@ -39,31 +39,31 @@ export const cards = [
 
 export const sidebarItems = [
   {
-    id: 2,
-    icon: <IoHomeOutline size={iconSize} className="icon-style" />,
-    path: '/',
-    title: 'Dashboard',
-  },
-  {
-    id: 3,
+    id: 1,
     icon: <IoConstructOutline size={iconSize} className="icon-style" />,
     path: '/product',
     title: 'Products',
   },
   {
-    id: 4,
+    id: 2,
     icon: <IoConstructOutline size={iconSize} className="icon-style" />,
-    path: '/coveragematrix',
+    path: '/coverage',
     title: 'Coverage Matrix',
   },
   {
-    id: 5,
+    id: 3,
+    icon: <IoHomeOutline size={iconSize} className="icon-style" />,
+    path: '/',
+    title: 'Dashboard',
+  },
+  {
+    id: 4,
     icon: <IoAnalyticsOutline size={iconSize} className="icon-style" />,
     path: '/analytics',
     title: 'Analytics',
   },
   {
-    id: 6,
+    id: 5,
     icon: <IoSettingsOutline size={iconSize} className="icon-style" />,
     path: '/settings',
     title: 'Settings',
