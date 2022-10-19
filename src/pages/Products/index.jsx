@@ -27,9 +27,11 @@ const Products = () => {
   useEffect(() => setProductData(products), [products]);
 
   const handleDelete = async (id) => {
-    await createAPIEndpoint(ENDPOINTS.PRODUCT).delete(id);
-    setProductData(products.filter((d) => d.id !== id));
-    setProducts(products);
+    if (window.confirm('Sure to delete product?')) {
+      await createAPIEndpoint(ENDPOINTS.PRODUCT).delete(id);
+      setProductData(products.filter((d) => d.id !== id));
+      setProducts(products);
+    }
   };
 
   const renderActions = ({ id }) => {
