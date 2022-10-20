@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import { MdAdd } from 'react-icons/md';
@@ -18,13 +18,12 @@ import {
 import { StateContext } from '../../context/StateContext';
 import { ThemeCtx } from '../../context/ThemeStore';
 import { createAPIEndpoint, ENDPOINTS } from '../../api';
+import prodPlaceholder from '../../images/product_placeholder.png';
 
 const Products = () => {
   const { products, setProducts } = useContext(StateContext);
   const [productData, setProductData] = useState(products);
   const { closed } = useContext(ThemeCtx);
-
-  useEffect(() => setProductData(products), [products]);
 
   const handleDelete = async (id) => {
     if (window.confirm('Sure to delete product?')) {
@@ -48,7 +47,7 @@ const Products = () => {
   const renderImage = ({ image, title }) => {
     return (
       <ProductCtr>
-        <ProductImage src={image} alt={title} />
+        <ProductImage src={image || prodPlaceholder} alt={title} />
         {title}
       </ProductCtr>
     );

@@ -31,7 +31,7 @@ const StateProvider = ({ children }) => {
     fetchCoverages();
   }, []);
 
-  // console.log('--------> products <---------:', products);
+  //  console.log('--------> products <---------:', products);
   // console.log('--------> coverages <---------:', coverages);
 
   return (

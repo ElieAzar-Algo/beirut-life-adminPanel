@@ -30,6 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TextField, Select, Switch } from 'formik-mui';
 import ArrayField from '../../components/ArrayField';
 import uploadFileProgress from '../../firebase/uploadFileProgress';
+import deleteFile from '../../firebase/deleteFile';
 
 const productData = [
   {
@@ -176,6 +177,7 @@ const Product = () => {
 
   useEffect(() => {
     async function uploadImage() {
+      await deleteFile(prod.image);
       const imageName = uuidv4() + '.' + file.name.split('.').pop();
       const url = await uploadFileProgress(
         file,
@@ -189,7 +191,7 @@ const Product = () => {
     if (file) {
       uploadImage();
     }
-  }, [file]);
+  }, [file, prod]);
 
   return (
     <ProductCtr closed={closed}>

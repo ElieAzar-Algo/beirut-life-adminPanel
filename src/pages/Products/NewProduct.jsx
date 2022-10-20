@@ -25,6 +25,7 @@ import { TextField, Select, Switch } from 'formik-mui';
 import ArrayField from '../../components/ArrayField';
 import { v4 as uuidv4 } from 'uuid';
 import uploadFileProgress from '../../firebase/uploadFileProgress';
+import prodPlaceholder from '../../images/product_placeholder.png';
 
 const formFields = [
   { key: 1, xs: 4, name: 'productCode', label: 'Product Code' },
@@ -231,7 +232,7 @@ const NewProduct = () => {
               <ProductFormRight>
                 <div className="productUpload">
                   <img
-                    src={values.image}
+                    src={values.image || prodPlaceholder}
                     alt={values.title}
                     className="productUploadImg"
                   />
@@ -248,7 +249,7 @@ const NewProduct = () => {
                     accept="image/*"
                     multiple
                     type="file"
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                   />
                 </Button>
                 <Box sx={{ marginTop: 2, width: '100%', maxWidth: 240 }}>
