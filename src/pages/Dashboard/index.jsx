@@ -1,15 +1,16 @@
 import { useContext } from 'react';
-import { Container, Cards } from './HomeStyles';
-import { Orders, Card } from '../../components';
-import { cards } from '../../constants';
+import { Container } from './HomeStyles';
+// import { Orders, Card } from '../../components';
+// import { cards } from '../../constants';
 import { ThemeCtx } from '../../context/ThemeStore';
 
-const Home = () => {
+const Dashboard = () => {
   const { closed } = useContext(ThemeCtx);
 
   return (
     <Container closed={closed}>
-      <Cards>
+      <h1>Dashboard</h1>
+      {/* <Cards>
         {cards.map((card) => (
           <Card
             key={card.id}
@@ -19,9 +20,9 @@ const Home = () => {
           />
         ))}
       </Cards>
-      <Orders />
+      <Orders /> */}
     </Container>
   );
 };
 
-export default Home;
+export default Dashboard;

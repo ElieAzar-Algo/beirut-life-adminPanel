@@ -53,7 +53,7 @@ export const sidebarItems = [
   {
     id: 3,
     icon: <IoHomeOutline size={iconSize} className="icon-style" />,
-    path: '/',
+    path: '/dashboard',
     title: 'Dashboard',
   },
   {

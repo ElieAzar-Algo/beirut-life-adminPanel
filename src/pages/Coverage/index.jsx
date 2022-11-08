@@ -20,6 +20,7 @@ const initialValues = {
   description: '',
   minAge: 0,
   sumInsuredMultiplier: 0,
+  duration: 0,
 };
 
 const iconSize = 20;
@@ -153,6 +154,15 @@ const Coverage = () => {
     {
       field: 'sumInsuredMultiplier',
       headerName: 'Suminsured Multiplier',
+      width: 200,
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'center',
+      align: 'center',
+      editable: true,
+    },
+    {
+      field: 'duration',
+      headerName: 'Duration',
       width: 200,
       headerClassName: 'super-app-theme--header',
       headerAlign: 'center',
