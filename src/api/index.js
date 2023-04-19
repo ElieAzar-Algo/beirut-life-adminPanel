@@ -12,7 +12,8 @@ export const ENDPOINTS = {
 
 export const createAPIEndpoint = (endpoint) => {
   let url = `${BASE_URL}/${endpoint}`;
-  const options = { headers: { 'Content-Type': 'application/json' } };
+  const accessTokne = localStorage.getItem("access-token")
+  const options = { headers: { 'Content-Type': 'application/json', 'x-access-token':accessTokne } };
 
   return {
     changepwd: (pwd) => axios.post(url, pwd, options),
@@ -23,7 +24,7 @@ export const createAPIEndpoint = (endpoint) => {
     fetch: () => axios.get(url),
     fetchById: (id) => axios.get(url + '/' + id),
     post: (newRecord) => axios.post(url, newRecord, options),
-    put: (id, updatedRecord) => axios.put(url + '/' + id, updatedRecord),
+    put: (id, updatedRecord) => axios.put(url + '/' + id, updatedRecord, options),
     delete: (id) => axios.delete(url + '/' + id),
   };
 };
