@@ -7,6 +7,7 @@ export const ENDPOINTS = {
   COVERAGE: 'coverage',
   AUTH: 'auth',
   CHANGEPWD: 'changepwd',
+  LOGIN:'user/login',
 };
 
 export const createAPIEndpoint = (endpoint) => {
@@ -15,9 +16,9 @@ export const createAPIEndpoint = (endpoint) => {
 
   return {
     changepwd: (pwd) => axios.post(url, pwd, options),
-    auth: (username, password) => {
-      const params = { username, password };
-      return axios.get(url, { params });
+    auth: (email, password) => {
+      const body = { email, password };
+      return axios.post(url,body,options);
     },
     fetch: () => axios.get(url),
     fetchById: (id) => axios.get(url + '/' + id),

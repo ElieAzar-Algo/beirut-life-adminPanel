@@ -4,6 +4,7 @@ import { ThemeCtx } from './context/ThemeStore';
 import { StateProvider } from './context/StateContext';
 import { ThemeProvider } from 'styled-components';
 import LightDarkSidebar from './components/LightDarkSidebar';
+import {AuthProvider} from './components/Login/auth';
 import GlobalStyle from './GlobalStyle';
 import { LicenseInfo } from '@mui/x-data-grid-pro';
 
@@ -13,6 +14,7 @@ function App() {
   const { theme } = useContext(ThemeCtx);
 
   return (
+  <AuthProvider>
     <ThemeProvider theme={{ theme }}>
       <StateProvider>
         <Router>
@@ -21,6 +23,7 @@ function App() {
         </Router>
       </StateProvider>
     </ThemeProvider>
+  </AuthProvider>
   );
 }
 
