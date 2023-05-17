@@ -8,11 +8,9 @@ import NoMatch from './NoMatch';
 import Coverage from '../pages/Coverage';
 import Dashboard from '../pages/Dashboard';
 import Login from '../components/Login';
-import { useAuth } from './Login/auth';
 import { RequireAuth } from './Login/RequireAuth';
 
 const LightDarkSidebar = () => {
-  const auth = useAuth()
   return (
     <>
       <LDSidebar />

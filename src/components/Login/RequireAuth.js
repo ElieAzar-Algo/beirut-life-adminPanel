@@ -1,6 +1,4 @@
-import { useAuth } from "./auth";
 import { Navigate } from "react-router-dom";
-import { useState } from "react";
 
 export const RequireAuth = ({children}) =>{
    
