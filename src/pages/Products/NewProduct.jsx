@@ -36,7 +36,7 @@ const formFields = [
     name: 'category',
     label: 'Category',
     type: 'Select',
-    menuItems: ['Accident', 'Travel', 'Medical'],
+    menuItems: ['Accident', 'Travel', 'Medical','Auto'],
   },
   { key: 5, xs: 12, name: 'description', label: 'Description' },
   { key: 6, xs: 3, name: 'sumInsured', label: 'Sum Insured', type: 'number' },
