@@ -9,6 +9,7 @@ import {
 } from 'recharts';
 
 const Chart = ({ title, data, dataKey, grid }) => {
+  console.log("test git")
   return (
     <ChartCtr>
       <h3 className="chartTitle">{title}</h3>
